@@ -77,7 +77,7 @@ function playAudio(track, pause = false) {
 }
 
 async function DisplayAlbums() {
-  let a = await fetch(`/AudioFiles/`);
+  let a = await fetch(`AudioFiles/`);
   let response = await a.text();
   let div = document.createElement("div");
   let anchors = div.getElementsByTagName("a");
@@ -87,10 +87,10 @@ async function DisplayAlbums() {
   let array = Array.from(anchors);
   for (let i = 0; i < array.length; i++) {
     const e = array[i];
-    if (e.href.includes("/AudioFiles") && !e.href.includes(".htaccess")) {
+    if (e.href.includes("AudioFiles") && !e.href.includes(".htaccess")) {
       let folder = e.href.split("/").slice(-2)[0];
       let a = await fetch(
-        `/AudioFiles/${folder}/info.json`
+        `AudioFiles/${folder}/info.json`
       );
       let response = await a.json();
       cardContainer.innerHTML =
@@ -98,7 +98,7 @@ async function DisplayAlbums() {
         `<div class="card" data-folder="${response.data}">
             <div class="play-button">▶</div>
             <img
-              src="/AudioFiles/${folder}/cover.jpeg"
+              src="AudioFiles/${folder}/cover.jpeg"
               alt="recitation-without-translation" />
             <h2>${response.tittle}</h2>
             <span>${response.description}</span>
