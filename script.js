@@ -1,20 +1,19 @@
 let currentAudio = new Audio();
-let currentFolder;
-let Audios;
+let currentFolder = "AudioFiles/Recitation";
+let Audios = [
+  "audio1.mp3",
+  "audio2.mp3",
+  
+];
 let previousVolume = currentAudio.volume;
-let play = document.querySelector("#play"); // Ensure play is defined
+let play = document.querySelector("#play");
 
 function convertSecondsToMinutes(seconds) {
-  // Calculate minutes and remaining seconds
   let minutes = Math.floor(seconds / 60);
   let remainingSeconds = Math.floor(seconds % 60);
-
-  // Ensure both minutes and seconds are two digits
   minutes = minutes < 10 ? "0" + minutes : minutes;
   remainingSeconds =
     remainingSeconds < 10 ? "0" + remainingSeconds : remainingSeconds;
-
-  // Return the formatted time string
   return `${minutes}:${remainingSeconds}`;
 }
 
