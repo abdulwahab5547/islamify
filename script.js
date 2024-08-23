@@ -19,45 +19,6 @@ function convertSecondsToMinutes(seconds) {
   return `${minutes}:${remainingSeconds}`;
 }
 
-// async function getAudios(folder) {
-//   let a = await fetch(`/${folder}/`);
-//   currentFolder = folder;
-//   let response = await a.text();
-//   let div = document.createElement("div");
-//   div.innerHTML = response;
-//   let Anchor_Tags = div.getElementsByTagName("a");
-//   Audios = [];
-//   for (let i = 0; i < Anchor_Tags.length; i++) {
-//     const element = Anchor_Tags[i];
-
-//     if (element.href.endsWith(".mp3")) {
-//       Audios.push(element.href.split("/").pop().replaceAll("%20", " "));
-//     }
-//   }
-
-//   // Getting the list of all the files
-//   let FileUl = document.querySelector(".audioList ul");
-//   FileUl.innerHTML = "";
-//   for (let element of Audios) {
-
-//     FileUl.innerHTML += `<li class="pointer item_lib">
-//         <img class="invert music" src="Images/Audio.svg " alt="Audio Icon">
-//         <div class="info">${element}</div>
-//         <img class="invert playNow" src="Images/play.svg" alt="Play Icon">
-//       </li>`;
-
-//     Array.from(
-//       document.querySelector(".audioList").getElementsByTagName("li")
-//     ).forEach((e) => {
-//       e.addEventListener("click", () => {
-//         playAudio(e.querySelector(".info").innerHTML.trim());
-//       });
-//     });
-//   }
-
-//   return Audios;
-// }
-
 function getAudios() {
   // Getting the list of all the files
   let FileUl = document.querySelector(".audioList ul");
@@ -78,29 +39,6 @@ function getAudios() {
     });
   }
 }
-
-  // Getting the list of all the files
-  let FileUl = document.querySelector(".audioList ul");
-  FileUl.innerHTML = "";
-  for (let element of Audios) {
-    FileUl.innerHTML += `<li class="pointer item_lib">
-        <img class="invert music" src="Images/Audio.svg " alt="Audio Icon">
-        <div class="info">${element}</div>
-        <img class="invert playNow" src="Images/play.svg" alt="Play Icon">
-      </li>`;
-
-    Array.from(
-      document.querySelector(".audioList").getElementsByTagName("li")
-    ).forEach((e) => {
-      e.addEventListener("click", () => {
-        playAudio(e.querySelector(".info").innerHTML.trim());
-      });
-    });
-  }
-
-  return Audios;
-}
-
 
 function playAudio(track, pause = false) {
   currentAudio.src = `${currentFolder}/` + track;
@@ -126,42 +64,6 @@ function playAudio(track, pause = false) {
     document.querySelector(".circle").style.left =
       (currentAudio.currentTime / currentAudio.duration) * 100 + "%";
   });
-}
-
-async function DisplayAlbums() {
-  let a = await fetch(`AudioFiles/`);
-  let response = await a.text();
-  let div = document.createElement("div");
-  let anchors = div.getElementsByTagName("a");
-  let cardContainer = document.querySelector(".allCards");
-  div.innerHTML = response;
-  // let array = Array.from(anchors);
-  let array = Array.from(anchors);
-  for (let i = 0; i < array.length; i++) {
-    const e = array[i];
-    if (e.href.includes("AudioFiles") && !e.href.includes(".htaccess")) {
-      let folder = e.href.split("/").slice(-2)[0];
-      let a = await fetch(
-        `AudioFiles/${folder}/info.json`
-      );
-      let response = await a.json();
-      cardContainer.innerHTML =
-        cardContainer.innerHTML +
-        `<div class="card" data-folder="${response.data}">
-            <div class="play-button">▶</div>
-            <img
-              src="AudioFiles/${folder}/cover.jpeg"
-              alt="recitation-without-translation" />
-            <h2>${response.tittle}</h2>
-            <span>${response.description}</span>
-          </div>`;
-    }
-    Array.from(document.getElementsByClassName("card")).forEach((e) => {
-      e.addEventListener("click", async (item) => {
-        await getAudios(`AudioFiles/${item.currentTarget.dataset.folder}`);
-      });
-    });
-  }
 }
 
 async function main() {
