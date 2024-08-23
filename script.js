@@ -18,8 +18,47 @@ function convertSecondsToMinutes(seconds) {
   return `${minutes}:${remainingSeconds}`;
 }
 
+// async function getAudios(folder) {
+//   let a = await fetch(`/${folder}/`);
+//   currentFolder = folder;
+//   let response = await a.text();
+//   let div = document.createElement("div");
+//   div.innerHTML = response;
+//   let Anchor_Tags = div.getElementsByTagName("a");
+//   Audios = [];
+//   for (let i = 0; i < Anchor_Tags.length; i++) {
+//     const element = Anchor_Tags[i];
+
+//     if (element.href.endsWith(".mp3")) {
+//       Audios.push(element.href.split("/").pop().replaceAll("%20", " "));
+//     }
+//   }
+
+//   // Getting the list of all the files
+//   let FileUl = document.querySelector(".audioList ul");
+//   FileUl.innerHTML = "";
+//   for (let element of Audios) {
+
+//     FileUl.innerHTML += `<li class="pointer item_lib">
+//         <img class="invert music" src="Images/Audio.svg " alt="Audio Icon">
+//         <div class="info">${element}</div>
+//         <img class="invert playNow" src="Images/play.svg" alt="Play Icon">
+//       </li>`;
+
+//     Array.from(
+//       document.querySelector(".audioList").getElementsByTagName("li")
+//     ).forEach((e) => {
+//       e.addEventListener("click", () => {
+//         playAudio(e.querySelector(".info").innerHTML.trim());
+//       });
+//     });
+//   }
+
+//   return Audios;
+// }
+
 async function getAudios(folder) {
-  let a = await fetch(`/${folder}/`);
+  let a = await fetch(`${folder}/`);
   currentFolder = folder;
   let response = await a.text();
   let div = document.createElement("div");
@@ -28,7 +67,6 @@ async function getAudios(folder) {
   Audios = [];
   for (let i = 0; i < Anchor_Tags.length; i++) {
     const element = Anchor_Tags[i];
-
     if (element.href.endsWith(".mp3")) {
       Audios.push(element.href.split("/").pop().replaceAll("%20", " "));
     }
@@ -38,7 +76,6 @@ async function getAudios(folder) {
   let FileUl = document.querySelector(".audioList ul");
   FileUl.innerHTML = "";
   for (let element of Audios) {
-
     FileUl.innerHTML += `<li class="pointer item_lib">
         <img class="invert music" src="Images/Audio.svg " alt="Audio Icon">
         <div class="info">${element}</div>
@@ -56,6 +93,7 @@ async function getAudios(folder) {
 
   return Audios;
 }
+
 
 // Function to play the music
 function playAudio(track, pause = false) {
